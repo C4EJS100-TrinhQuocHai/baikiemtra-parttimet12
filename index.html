@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    table {
+
+        margin: 0 auto;
+        margin-top: 50px;
+        width: 80%;
+    }
+
+    tr,
+    td {
+        margin: 150px;
+    }
+
+    td {
+        padding: 5px;
+        text-align: center;
+    }
+</style>
+
+<body>
+    <input id="input" type="text" placeholder="nhập tên students">
+    <button onclick="createStudent()"> Create </button>
+    <br>
+    <input oninput="searchListStudent()" id="search" type="text" placeholder="nhập tên students">
+
+    <button onclick="searchStudent()"> Search </button>
+    <table border="1px">
+        <thead>
+            <th> STT</th>
+            <th> Name</th>
+            <th> Edit</th>
+            <th> Delete</th>
+        </thead>
+        <tbody id="body">
+            <!--   <tr>
+                <td> ${i+1} </td>
+                <td> ${user} </td>
+                <td> <button onclick=editUser(${i})> Edit </button></td>
+                <td> <button onclick=deleteUser(${i})> Delete </button> </td>
+            </tr><tr>
+                <td> ${i+1} </td>
+                <td> ${user} </td>
+                <td> <button onclick=editUser(${i})> Edit </button></td>
+                <td> <button onclick=deleteUser(${i})> Delete </button> </td>
+            </tr><tr>
+                <td> ${i+1} </td>
+                <td> ${user} </td>
+                <td> <button onclick=editUser(${i})> Edit </button></td>
+                <td> <button onclick=deleteUser(${i})> Delete </button> </td>
+            </tr> -->
+        </tbody>
+    </table>
+</body>
+<script>
+    let listUsers = [];
+ 
+
+    // function tạo thêm user
+    function createStudent() {
+        let user = document.getElementById("input").value;
+        listUsers.push(user);
+        document.getElementById("input").value = ""; // gán lại giá trị ô input về rỗng.
+        renderListUser(listUsers);
+
+    }
+    // vẽ lại list user trên trình duyệt 
+    function renderListUser(dataRender) {
+        let bodyData = "";
+        for (let i = 0; i < dataRender.length; i++) {
+            let user = dataRender[i];
+            bodyData +=
+                `
+            <tr>
+                <td> ${i + 1} </td>
+                <td> ${user}  </td>
+                <td> <button onclick=editUser(${i})> Edit </button></td>
+                <td> <button onclick=deleteUser(${i})> Delete </button> </td>
+            </tr>
+          `
+        }
+
+        document.getElementById("body").innerHTML = bodyData;
+    }
+    function deleteUser(id) {
+        //console.log("1111111",id);
+        listUsers.splice(id, 1);
+        renderListUser(listUsers);
+    }
+
+
+
+    function editUser(idUser) {
+        let result = prompt("bạn muốn đổi tên thành tên mới!", listUsers[idUser]);
+        //listUsers.splice(id11,1,result);
+        listUsers[idUser] = result;
+        renderListUser(listUsers);
+    }
+    // function search list data  
+    function searchListStudent() {
+        // lấy giá trị người dùng nhập vào.
+         let valueInput = document.getElementById("search").value;
+         
+          let listUsersSearch = [];
+        for (let i = 0; i < listUsers.length; i++) {
+            let user=listUsers[i];
+            if(user.includes(valueInput)){
+                listUsersSearch.push(user)
+            }
+        }
+        renderListUser(listUsersSearch);
+    
+    }
+</script>
+
+</html>
